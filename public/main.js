@@ -4,6 +4,7 @@ const appid = 'a9912898d642cb04a000d534b4f8653a'
 let geolocationSupported
 let lat
 let lon
+let timeoutID
 
 let defaultCityZipCountry
 
@@ -85,7 +86,8 @@ const writeToNewPInContainer = (text, container) => {
 const requestWeather = () => {
   let cityZipCountry = qS('.cityZipCountry').value
 
-  if (cityZipCountry === '' || cityZipCountry === defaultCityZipCountry) {
+  if (cityZipCountry === '') {
+    // } || cityZipCountry === defaultCityZipCountry) {
     window.alert('Please provide a valid city name or US zip-code.')
     return
   }
@@ -98,17 +100,37 @@ const requestWeather = () => {
   fetchWeather(cityZipCountry)
 }
 
-const clearInput = () => {
-  if (qS('.cityZipCountry').value === defaultCityZipCountry) {
-    qS('.cityZipCountry').value = ''
-  }
-}
+// const searchAfterDelay = () => {
+//   console.log('input: ' + qS('.cityZipCountry').value)
+//   if (typeof timeoutID === 'undefined') {
+//     if (qS('.cityZipCountry').value !== '') {
+//       timeoutID = window.setTimeout(
+//         fetchWeather(qS('.cityZipCountry').value),
+//         1000
+//       )
+//     }
+//   } else {
+//     window.clearTimeout(timeoutID)
+//     if (qS('.cityZipCountry').value !== '') {
+//       timeoutID = window.setTimeout(
+//         fetchWeather(qS('.cityZipCountry').value),
+//         1000
+//       )
+//     }
+//   }
+// }
 
-const reinsertInput = () => {
-  if (qS('.cityZipCountry').value === '') {
-    qS('.cityZipCountry').value = defaultCityZipCountry
-  }
-}
+// const clearInput = () => {
+//   if (qS('.cityZipCountry').value === defaultCityZipCountry) {
+//     qS('.cityZipCountry').value = ''
+//   }
+// }
+
+// const reinsertInput = () => {
+//   if (qS('.cityZipCountry').value === '') {
+//     qS('.cityZipCountry').value = defaultCityZipCountry
+//   }
+// }
 
 const main = () => {
   defaultCityZipCountry = qS('.cityZipCountry').value // save the default value of input field
@@ -136,5 +158,6 @@ const k2f = kelvin => {
 
 document.addEventListener('DOMContentLoaded', main)
 qS('.fetchWeatherButton').addEventListener('click', requestWeather)
-qS('.cityZipCountry').addEventListener('focus', clearInput)
-qS('.cityZipCountry').addEventListener('blur', reinsertInput)
+// qS('.cityZipCountry').addEventListener('input', searchAfterDelay)
+// qS('.cityZipCountry').addEventListener('focus', clearInput)
+// qS('.cityZipCountry').addEventListener('blur', reinsertInput)
