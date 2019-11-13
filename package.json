@@ -3,8 +3,9 @@
   "name": "currentweather",
   "scripts": {
     "start": "browser-sync start --server public --files public",
-    "deploy": "echo 'To setup deployment run: yarn setup-deploy'",
-    "setup-deploy": "app-app --deploy && yarn deploy"
+    "deploy": "netlify deploy --prod --dir=public",
+    "setup-deploy": "app-app --deploy && yarn deploy",
+    "postdeploy": "echo 'Your site was deployed to https://currentweather-schorschi.netlify.com'"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
@@ -23,5 +24,6 @@
     "semi": false,
     "singleQuote": true,
     "useTabs": false
-  }
+  },
+  "homepage": "https://currentweather-schorschi.netlify.com"
 }

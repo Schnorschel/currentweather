@@ -91,34 +91,33 @@ const requestWeather = () => {
     window.alert('Please provide a valid city name or US zip-code.')
     return
   }
-  if (typeof Storage !== 'undefined') {
-    window.localStorage.setItem('user_location_search', cityZipCountry)
-  }
+  saveLastSearch(cityZipCountry)
+
   if (!isNaN(cityZipCountry)) {
     cityZipCountry = cityZipCountry + ',us'
   }
   fetchWeather(cityZipCountry)
 }
 
-// const searchAfterDelay = () => {
-//   console.log('input: ' + qS('.cityZipCountry').value)
-//   if (typeof timeoutID === 'undefined') {
-//     if (qS('.cityZipCountry').value !== '') {
-//       timeoutID = window.setTimeout(
-//         fetchWeather(qS('.cityZipCountry').value),
-//         1000
-//       )
-//     }
-//   } else {
-//     window.clearTimeout(timeoutID)
-//     if (qS('.cityZipCountry').value !== '') {
-//       timeoutID = window.setTimeout(
-//         fetchWeather(qS('.cityZipCountry').value),
-//         1000
-//       )
-//     }
-//   }
-// }
+const saveLastSearch = searchText => {
+  if (typeof Storage !== 'undefined') {
+    window.localStorage.setItem('user_location_search', searchText)
+  }
+}
+
+const searchAfterDelay = () => {
+  console.log('input: ' + qS('.cityZipCountry').value)
+  if (typeof timeoutID === 'undefined') {
+    if (qS('.cityZipCountry').value !== '') {
+      timeoutID = window.setTimeout(requestWeather, 1000)
+    }
+  } else {
+    window.clearTimeout(timeoutID)
+    if (qS('.cityZipCountry').value !== '') {
+      timeoutID = window.setTimeout(requestWeather, 1000)
+    }
+  }
+}
 
 // const clearInput = () => {
 //   if (qS('.cityZipCountry').value === defaultCityZipCountry) {
@@ -157,7 +156,7 @@ const k2f = kelvin => {
 }
 
 document.addEventListener('DOMContentLoaded', main)
-qS('.fetchWeatherButton').addEventListener('click', requestWeather)
-// qS('.cityZipCountry').addEventListener('input', searchAfterDelay)
+// qS('.fetchWeatherButton').addEventListener('click', requestWeather)
+qS('.cityZipCountry').addEventListener('input', searchAfterDelay)
 // qS('.cityZipCountry').addEventListener('focus', clearInput)
 // qS('.cityZipCountry').addEventListener('blur', reinsertInput)
